@@ -2,6 +2,7 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.templates.Constants;
 import edu.wpi.first.wpilibj.templates.OI;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
@@ -30,9 +31,7 @@ public class DrivetrainSubsystem extends Subsystem {
   public void arcadeDrive(){//drive with arcade controls
   
   robotdrive.setSafetyEnabled(false);
-  robotdrive.arcadeDrive(OI.DriveMagnitude,OI.DriveTurn);
-  
-  
+  robotdrive.arcadeDrive(OI.DriveMagnitude,OI.DriveTurn-Constants.regularTurnVal);
   
   }
   

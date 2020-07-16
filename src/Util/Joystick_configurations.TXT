@@ -21,17 +21,17 @@ Be sure to delete the old config first
   public static JoystickButton driverR= new JoystickButton(Driverstick,6);
   public static JoystickButton driverL= new JoystickButton(Driverstick,5);
 
-  public static JoystickButton driverZR;//this button doesn't exist,keep to prevent null pointers
-  public static JoystickButton driverZL;//this button doesn't exist,keep to prevent null pointers
+  public static JoystickButton driverZR= new JoystickButton(Driverstick,255);//this button doesn't exist,keep to prevent null pointers
+  public static JoystickButton driverZL= new JoystickButton(Driverstick,255);//this button doesn't exist,keep to prevent null pointers
 
   public static int BumperAxis = 3;
   public static int LeftXAxis = 1;
-  public static int LeftYAxis =2;
-  public static int RightXAxis=4;
-  public static int RightYAxis=5;
+  public static int LeftYAxis = 2;
+  public static int RightXAxis= 4;
+  public static int RightYAxis= 5;
 
-  public static int DpadYaxis;//this axis doesn't exist,keep to prevent null pointers
-  public static int DpadXaxis;//this axis doesn't exist,keep to prevent null pointers
+  public static int DpadYaxis=255;//this axis doesn't exist,keep to prevent null pointers
+  public static int DpadXaxis=254;//this axis doesn't exist,keep to prevent null pointers
 
  //-- 
 
@@ -57,7 +57,7 @@ Be sure to delete the old config first
   public static int DpadYaxis = 6;
   public static int DpadXaxis = 5;
 
- public static int BumperAxis;//this axis doesn't exist,keep to prevent null pointers
+ public static int BumperAxis=255;//this axis doesn't exist,keep to prevent null pointers
 
 //--
 

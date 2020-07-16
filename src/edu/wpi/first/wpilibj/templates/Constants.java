@@ -24,6 +24,8 @@ public class Constants {//constant values used throught the project
     
     public static double medTurnVal = 0.125;//medium turn subtractor for fast creep
     
+    public static double regularTurnVal = 0.125;//turn subtractor for when normally driving
+    
     
     
 }

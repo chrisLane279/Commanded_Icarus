@@ -22,31 +22,32 @@ public class OI {//operator interface class
     public static boolean isCreeping;
     
     //Instantiate all joystick attributes
-  //This is a Nintendo Switch fight pad pro controller--
-  static String JoystickType = "NintendoSwitchFightPadPro";
-  public static JoystickButton driverA = new JoystickButton(Driverstick,3);
+  //This is an xbox or playStation controller--
+  static String JoystickType = "Xbox/PlayStation";
+  public static JoystickButton driverA = new JoystickButton(Driverstick,1);
   public static JoystickButton driverB= new JoystickButton(Driverstick,2);
-  public static JoystickButton driverY= new JoystickButton(Driverstick,1);
+  public static JoystickButton driverY= new JoystickButton(Driverstick,3);
   public static JoystickButton driverX= new JoystickButton(Driverstick,4);  
-  public static JoystickButton driverRMB= new JoystickButton(Driverstick,10);
-  public static JoystickButton driverLMB= new JoystickButton(Driverstick,9);
-  public static JoystickButton driverRSB= new JoystickButton(Driverstick,12);
-  public static JoystickButton driverLSB= new JoystickButton(Driverstick,11);   
+  public static JoystickButton driverRMB= new JoystickButton(Driverstick,8);
+  public static JoystickButton driverLMB= new JoystickButton(Driverstick,7);
+  public static JoystickButton driverRSB= new JoystickButton(Driverstick,10);
+  public static JoystickButton driverLSB= new JoystickButton(Driverstick,9);   
   public static JoystickButton driverR= new JoystickButton(Driverstick,6);
   public static JoystickButton driverL= new JoystickButton(Driverstick,5);
-  public static JoystickButton driverZR= new JoystickButton(Driverstick,8);
-  public static JoystickButton driverZL= new JoystickButton(Driverstick,7);
-  
+
+  public static JoystickButton driverZR= new JoystickButton(Driverstick,255);//this button doesn't exist,keep to prevent null pointers
+  public static JoystickButton driverZL= new JoystickButton(Driverstick,254);;//this button doesn't exist,keep to prevent null pointers
+
+  public static int BumperAxis = 3;
   public static int LeftXAxis = 1;
-  public static int LeftYAxis = 2;
-  public static int RightXAxis = 3;
-  public static int RightYAxis = 4;
-  public static int DpadYaxis = 6;
-  public static int DpadXaxis = 5;
+  public static int LeftYAxis =2;
+  public static int RightXAxis=4;
+  public static int RightYAxis=5;
 
- public static int BumperAxis;//this axis doesn't exist,keep to prevent null pointers
+  public static int DpadYaxis=255;//this axis doesn't exist,keep to prevent null pointers
+  public static int DpadXaxis=254;//this axis doesn't exist,keep to prevent null pointers
 
-//--
+ //--
   
 
     public void OIinit(){//initialize OI
@@ -61,15 +62,15 @@ public class OI {//operator interface class
 
     public void OIrun(){//runs continuously in teleoperated
       
-       DriveMagnitude = -Driverstick.getRawAxis(OI.LeftYAxis);//gets the drive magnitude from joystick
+       DriveMagnitude = -Driverstick.getRawAxis(OI.BumperAxis);//gets the drive magnitude from joystick
        DriveTurn = -Driverstick.getRawAxis(LeftXAxis);//gets the drive turn value from joystick
        isCreeping = (OI.driverL.get() || OI.driverR.get() || OI.driverZL.get() || OI.driverZR.get() );//isCreeping is true if any creep buttons are
 
        Robot.drivewithsticks.drive();//drives the bot
   
        if(OI.driverRMB.get() == true){
-           CommandBase.m_drivetrainSubsystem.stop();//This MUST be here! Else the robot could drive withought control.
-           Robot.driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Driver exception");
+           CommandBase.m_drivetrainSubsystem.stop();//This MUST be here! Else the robot could drive without control.
+           Robot.driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Driver stop exception on Driverstick");
            Robot.driverstationLCD.updateLCD();
            throw driverStopException;//This is basically an emergency stop for the driver
        }
