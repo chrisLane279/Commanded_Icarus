@@ -1,15 +1,12 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.            
-/*
-/*@Editor Cglan
+/* Open Source Software - may be modified and shared by FRC teams.            */           
+/*                                                                            */
+/*@ Cglan                                                                     */
 /*
 /*----------------------------------------------------------------------------*/
 
 package edu.wpi.first.wpilibj.templates;
-
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,24 +14,23 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
-import edu.wpi.first.wpilibj.templates.commands.DriveCommand;
+import edu.wpi.first.wpilibj.templates.commands.*;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 
 
 public class Robot extends IterativeRobot {
+    
+    int cycle = 1;//cycle counter 
 
-   public static Command drivecommand;//the drive command
+   public static Command drivewithsticks;//the drive command for standard driver control
    public static RobotMap robotmap = new RobotMap();//robot map
-   public static DriveWithSticks drivewithsticks = new DriveWithSticks();
    public static DriverStationLCD driverstationLCD = DriverStationLCD.getInstance();
-  // public static DriverStation driverstation = DriverStation.getInstance(); 
+  
  
     
     public void robotInit() {//initialize at start, runs once
         System.out.println("Robot code exists");
-        System.out.println("robotInit");        
-        // instantiate the command used for the autonomous period
-        drivecommand= new DriveCommand();//init drive command
+        System.out.println("robotInit");    
         
         // Initialize all subsystems--
         robotmap.RobotMapInit();
@@ -42,11 +38,21 @@ public class Robot extends IterativeRobot {
         CommandBase.m_drivetrainSubsystem.drivetrainInit();
         CommandBase.oi.OIinit();
 
-
         
-        driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Robot initialized");
-        driverstationLCD.println(DriverStationLCD.Line.kUser2,1,"All systems are ready");
-        driverstationLCD.updateLCD();
+  //*This if determines what controller type the bot is using and selects the appropriate drive command*
+        if("Xbox/PlayStation".equals(CommandBase.oi.JoystickType)){      
+        drivewithsticks = new DriveWithXbox_Ps();//init drive command for xbox/ps controller
+        }
+        else if("NintendoSwitchFPP".equals(CommandBase.oi.JoystickType)){
+        drivewithsticks = new DriveWithNintendoFPP();//init drive command for nintendo fpp controller   
+        }
+        else{
+        drivewithsticks = new DriveStop(); //will stop dt
+        }
+        
+        instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot initialized");
+        instantDriverstationLCD(DriverStationLCD.Line.kUser2,1,"All systems are ready");
+   
     }
 
     
@@ -58,15 +64,16 @@ public class Robot extends IterativeRobot {
         driverstationLCD.clear();
         System.out.println("autonomusInit, Robot is alive");    
         
-        driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Autonomus started");
-        driverstationLCD.updateLCD();
+        instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Autonomus started");
+        
         
     }   
 
     public void autonomousPeriodic() {//runs in auto
         Scheduler.getInstance().run();//run cmd scheduler
+
         
-        driverstationLCD.updateLCD();
+      
     }
 
     
@@ -76,17 +83,19 @@ public class Robot extends IterativeRobot {
     
     
     public void teleopInit() {//initialize teleop
-        driverstationLCD.clear();
+        cycle++;//incriment cycle for every teleop init
+        driverstationLCD.clear();//clear boot messages from ds
         System.out.println("teleopInit, Robot is alive");
-        driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Teleoperated started");
-        driverstationLCD.updateLCD();
+        instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Teleoperated started");
+        
+        drivewithsticks.start();//Start the drive command
     }
     
     public void teleopPeriodic() {
             
         CommandBase.oi.OIrun();//run oi method
         Scheduler.getInstance().run();// run cmd scheduler
-        driverstationLCD.updateLCD();
+
     }
     
     
@@ -106,20 +115,32 @@ public class Robot extends IterativeRobot {
     
     
     public void disabledInit(){//init disabled period
+        if(cycle>1){
+         driverstationLCD.clear();
+        }
+        
+                CommandBase.m_drivetrainSubsystem.setFans(false);
+                
     System.out.println("DisabledInit"); 
-    driverstationLCD.println(DriverStationLCD.Line.kUser1,1,"Robot disabled   ");
+    instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot disabled      ");
     
     }
     
     public void disabledPeriodic(){//run in disabled mode
     
-  //      if(driverstation.getBatteryVoltage()>= Constants.criticalBattVoltage){
-        //   driverstationLCD.println(DriverStationLCD.Line.kUser3,1,"CRITICAL BATTERY VOLTAGE"); 
-        //}  
-        
-        
-    driverstationLCD.updateLCD();
+
     }
     
     
+    public static void instantDriverstationLCD(DriverStationLCD.Line line, int column, String text){
+        //Legacy ds has 21 characters per line
+        
+        driverstationLCD.println(line, column,"                     ");//fully clear the line with 21 spaces
+        driverstationLCD.updateLCD();//write the line clear
+        
+        driverstationLCD.println(line, column, text);//buffers the text to be displayed
+        driverstationLCD.updateLCD();//writes the text to the lcd
+        
+    }
+        
 }

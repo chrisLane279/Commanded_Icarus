@@ -14,9 +14,9 @@ public class Constants {//constant values used throught the project
     
     public static String RobotName = "Icarus";//the bot name
     
-    public static double slowCreepSpeed= 0.435;//slow creep speed
+    public static double slowCreepSpeed= 0.675;//slow creep speed
     
-    public static double fastCreepSpeed= 0.750;//fast creep speed
+    public static double fastCreepSpeed= 0.765;//fast creep speed
     
     public static double criticalBattVoltage = 9.000;//voltage at which a battery must be changed
     

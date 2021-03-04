@@ -2,9 +2,8 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.templates.Constants;
-import edu.wpi.first.wpilibj.templates.OI;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+
 
 
 /**
@@ -14,7 +13,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 public class DrivetrainSubsystem extends Subsystem {
    
     
-   public  RobotDrive robotdrive;
+   public static RobotDrive robotdrive;
    
    
    
@@ -24,34 +23,32 @@ public class DrivetrainSubsystem extends Subsystem {
   robotdrive.setSafetyEnabled(false);
   robotdrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
   
-  
-  
   }
     
-  public void arcadeDrive(){//drive with arcade controls
+  public void arcadeDrive(double magnitude,double rotation){//drive with arcade controls
   
   robotdrive.setSafetyEnabled(false);
-  robotdrive.arcadeDrive(OI.DriveMagnitude,OI.DriveTurn-Constants.regularTurnVal);
+  
+  robotdrive.arcadeDrive(magnitude, rotation);
   
   }
-  
-  public void creep(double speed, double turnSubtractor){//creep forward
-      
-    
-  robotdrive.setSafetyEnabled(false);
-  robotdrive.arcadeDrive(speed, OI.DriveTurn-turnSubtractor);
- }   
-
   
   public void stop(){//stop the drivetrain
   robotdrive.setSafetyEnabled(false);
        robotdrive.drive(0,0);
   
   }
+  
+  public void setFans(boolean io){//set the victor fans on/off, they should ALWAYS be on when driving motors
+  
+  RobotMap.dtFans.set(io);//sets the fans on or off
+      
+  
+  }
 
     public void initDefaultCommand() {//this subsystem has no default command
         // Set the default command for a subsystem here.
-     //   setDefaultCommand();
+       // setDefaultCommand();
     }
 }
 
