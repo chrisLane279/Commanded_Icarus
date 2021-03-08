@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 
 public class Robot extends IterativeRobot {
     
-    int cycle = 1;//cycle counter 
+    int cycle = 1;//robot enable/disable cycle counter 
 
    public static Command drivewithsticks;//the drive command for standard driver control
    public static RobotMap robotmap = new RobotMap();//robot map
@@ -117,9 +117,9 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){//init disabled period
         if(cycle>1){
          driverstationLCD.clear();
-        }
+        }//clears boot info only after initial enable
         
-                CommandBase.m_drivetrainSubsystem.setFans(false);
+     CommandBase.m_drivetrainSubsystem.setFans(false);//make sure the fans are off
                 
     System.out.println("DisabledInit"); 
     instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot disabled      ");
