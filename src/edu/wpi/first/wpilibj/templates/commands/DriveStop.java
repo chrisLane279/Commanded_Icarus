@@ -22,7 +22,7 @@ public class DriveStop extends CommandBase {
     protected void initialize() { // Called just before this Command runs the first time
         
         CommandBase.m_drivetrainSubsystem.stop();//stop the drivetrain in init
-        System.out.println("Drive command stopped");
+        System.out.println("Drivetrain stopped");
         
     }
 

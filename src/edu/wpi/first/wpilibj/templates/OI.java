@@ -1,5 +1,6 @@
 package edu.wpi.first.wpilibj.templates;
 
+import Util.Joystick_configurations;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
@@ -11,10 +12,12 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {//operator interface class
+public class OI{//operator interface class
+    
+    public Joystick_configurations joystickconfig;
 
     public DriverStopException driverStopException = new DriverStopException("The robot driver has demanded the robot to stop,reboot the robot controller");
-
+    
     public static final Joystick Driverstick = new Joystick(1);//driver joystick
     public static final Joystick Operatorstick = new Joystick(2);//operator joystick
     
@@ -25,62 +28,68 @@ public class OI {//operator interface class
 
 
     //Instantiate all joystick attributes
-    //This is an xbox or playStation controller--
-    String JoystickType = "Xbox/PlayStation";
+    public static String JoystickType;
     
     //Driver Joystick->
-    public static JoystickButton driverA = new JoystickButton(Driverstick,1);
-    public static JoystickButton driverB= new JoystickButton(Driverstick,2);
-    public static JoystickButton driverY= new JoystickButton(Driverstick,3);
-    public static JoystickButton driverX= new JoystickButton(Driverstick,4);  
-    public static JoystickButton driverRMB= new JoystickButton(Driverstick,8);
-    public static JoystickButton driverLMB= new JoystickButton(Driverstick,7);
-    public static JoystickButton driverRSB= new JoystickButton(Driverstick,10);
-    public static JoystickButton driverLSB= new JoystickButton(Driverstick,9);   
-    public static JoystickButton driverR= new JoystickButton(Driverstick,6);
-    public static JoystickButton driverL= new JoystickButton(Driverstick,5);
+    public static JoystickButton driverA ;
+    public static JoystickButton driverB;
+    public static JoystickButton driverY;
+    public static JoystickButton driverX;
+    public static JoystickButton driverRMB;
+    public static JoystickButton driverLMB;
+    public static JoystickButton driverRSB;
+    public static JoystickButton driverLSB;
+    public static JoystickButton driverR;
+    public static JoystickButton driverL;
+    public static JoystickButton driverZR;
+    public static JoystickButton driverZL;
 
-    public static JoystickButton driverZR= new JoystickButton(Driverstick,255);//this button doesn't exist,keep to prevent null pointers
-    public static JoystickButton driverZL= new JoystickButton(Driverstick,255);//this button doesn't exist,keep to prevent null pointers
+    public static int driverBumperAxis;
+    public static int driverLeftXAxis ;
+    public static int driverLeftYAxis ;
+    public static int driverRightXAxis;
+    public static int driverRightYAxis;
 
-    public static int driverBumperAxis = 3;
-    public static int driverLeftXAxis = 1;
-    public static int driverLeftYAxis = 2;
-    public static int driverRightXAxis= 4;
-    public static int driverRightYAxis= 5;
-
-    public static int driverDpadYaxis=255;//this axis doesn't exist,keep to prevent null pointers
-    public static int driverDpadXaxis=254;//this axis doesn't exist,keep to prevent null pointers
+    public static int driverDpadYaxis;
+    public static int driverDpadXaxis;
     
-    //Operator joystick->
-    
-    public static JoystickButton operatorA = new JoystickButton(Operatorstick,1);
-    public static JoystickButton operator= new JoystickButton(Operatorstick,2);
-    public static JoystickButton operatorY= new JoystickButton(Operatorstick,3);
-    public static JoystickButton operatorX= new JoystickButton(Operatorstick,4);  
-    public static JoystickButton operatorRMB= new JoystickButton(Operatorstick,8);
-    public static JoystickButton operatorLMB= new JoystickButton(Operatorstick,7);
-    public static JoystickButton operatorRSB= new JoystickButton(Operatorstick,10);
-    public static JoystickButton operatorLSB= new JoystickButton(Operatorstick,9);   
-    public static JoystickButton operatorR= new JoystickButton(Operatorstick,6);
-    public static JoystickButton operatorL= new JoystickButton(Operatorstick,5);
-
-    public static JoystickButton operatorZR= new JoystickButton(Operatorstick,255);//this button doesn't exist,keep to prevent null pointers
-    public static JoystickButton operatorZL= new JoystickButton(Operatorstick,255);//this button doesn't exist,keep to prevent null pointers
-
-    public static int operatorBumperAxis = 3;
-    public static int operatorrLeftXAxis = 1;
-    public static int operatorLeftYAxis = 2;
-    public static int operatorRightXAxis= 4;
-    public static int operatorRightYAxis= 5;
-
-    public static int operatorDpadYaxis=255;//this axis doesn't exist,keep to prevent null pointers
-    public static int operatorDpadXaxis=254;//this axis doesn't exist,keep to prevent null pointers
 
  //-- 
  
- 
-    public void OIinit() {//initialize OI
+   
+    public void OIinit() {//initialize OI 
+        
+        
+        Joystick_configurations.selectJoystickType("LogitechWingman");
+        
+     JoystickType = Joystick_configurations.finalJoystickType;//the selected joystick for driving the bot
+     
+     //initialize all joystick buttons
+     driverA = new JoystickButton(Driverstick,Joystick_configurations.A_ID);
+     driverB= new JoystickButton(Driverstick,Joystick_configurations.B_ID);
+     driverY= new JoystickButton(Driverstick,Joystick_configurations.Y_ID);
+     driverX= new JoystickButton(Driverstick,Joystick_configurations.X_ID);  
+     driverRMB= new JoystickButton(Driverstick,Joystick_configurations.RMB_ID);
+     driverLMB= new JoystickButton(Driverstick,Joystick_configurations.LMB_ID);
+     driverRSB= new JoystickButton(Driverstick,Joystick_configurations.RSB_ID);
+     driverLSB= new JoystickButton(Driverstick,Joystick_configurations.LSB_ID);   
+     driverR= new JoystickButton(Driverstick,Joystick_configurations.R_ID);
+     driverL= new JoystickButton(Driverstick,Joystick_configurations.L_ID);
+     driverZR= new JoystickButton(Driverstick,Joystick_configurations.ZR_ID);
+     driverZL= new JoystickButton(Driverstick,Joystick_configurations.ZL_ID);
+
+     //initialize all joystick axis
+      driverBumperAxis = Joystick_configurations.BumperAxis_ID;
+      driverLeftXAxis = Joystick_configurations.LeftXAxis_ID;
+      driverLeftYAxis = Joystick_configurations.LeftYAxis_ID;
+      driverRightXAxis= Joystick_configurations.RightXAxis_ID;
+      driverRightYAxis= Joystick_configurations.RightYAxis_ID;
+
+      driverDpadYaxis=Joystick_configurations.DpadYaxis_ID;
+      driverDpadXaxis=Joystick_configurations.DpadXaxis_ID;
+        
+        
+  
         System.out.println("OI initialized");
         System.out.println("System controller set to:");
         System.out.println(JoystickType);

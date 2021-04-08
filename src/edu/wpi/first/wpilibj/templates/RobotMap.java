@@ -21,6 +21,11 @@ public class RobotMap {
   
 
   public static final int dtFansPort = 1;//di/o for the dt fans
+  
+  public static final int joyswitchPort1 =2;
+  public static final int joyswitchPort2 =3;
+  public static final int joyswitchPort3 =4;
+  public static final int joyswitchPort4 =5;
 
 
   

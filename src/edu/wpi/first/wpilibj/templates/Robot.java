@@ -1,9 +1,8 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams.            */           
+/*                                                                            */                                                                     
 /*                                                                            */
-/*@ Cglan                                                                     */
-/*
 /*----------------------------------------------------------------------------*/
 
 package edu.wpi.first.wpilibj.templates;
@@ -39,15 +38,22 @@ public class Robot extends IterativeRobot {
         CommandBase.oi.OIinit();
 
         
-  //*This if determines what controller type the bot is using and selects the appropriate drive command*
-        if("Xbox/PlayStation".equals(CommandBase.oi.JoystickType)){      
-        drivewithsticks = new DriveWithXbox_Ps();//init drive command for xbox/ps controller
+  //*This conditional determines what controller type the bot is using and selects the appropriate drive command*
+        if("Xbox/PlayStation".equals(OI.JoystickType)){      
+            drivewithsticks = new DriveWithXbox_Ps();//init drive command for xbox/ps controller
         }
-        else if("NintendoSwitchFPP".equals(CommandBase.oi.JoystickType)){
-        drivewithsticks = new DriveWithNintendoFPP();//init drive command for nintendo fpp controller   
+        else if("NintendoSwitchFPP".equals(OI.JoystickType)){
+            drivewithsticks = new DriveWithNintendoFPP();//init drive command for nintendo fpp controller   
+        }
+         else if("GenericHID".equals(OI.JoystickType)){
+            drivewithsticks = new DriveWithXbox_Ps();//init drive command for Generic controller  
+        }
+        else if("LogitechWingman".equals(OI.JoystickType)){
+            drivewithsticks = new DriveWithLogitechWingman();//init drive command for logitech wingman controller  
         }
         else{
-        drivewithsticks = new DriveStop(); //will stop dt
+             System.out.println("Check input string vs expected string if the drivetrain should be running");
+            drivewithsticks = new DriveStop(); //will stop dt
         }
         
         instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot initialized");
@@ -103,7 +109,7 @@ public class Robot extends IterativeRobot {
     
     
    public void testInit(){//test init
-   System.out.println("TestInit");
+       System.out.println("TestInit");
    }
   
     public void testPeriodic() {//run test
@@ -121,8 +127,8 @@ public class Robot extends IterativeRobot {
         
      CommandBase.m_drivetrainSubsystem.setFans(false);//make sure the fans are off
                 
-    System.out.println("DisabledInit"); 
-    instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot disabled      ");
+        System.out.println("DisabledInit"); 
+        instantDriverstationLCD(DriverStationLCD.Line.kUser1,1,"Robot disabled      ");
     
     }
     
