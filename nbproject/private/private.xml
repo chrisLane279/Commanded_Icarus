@@ -5,6 +5,8 @@
         <group>
             <file>file:/C:/Users/cglan/OneDrive/Documents/GitHub/Commanded_Icarus/src/edu/wpi/first/wpilibj/templates/Robot.java</file>
             <file>file:/C:/Users/cglan/OneDrive/Documents/GitHub/Commanded_Icarus/src/edu/wpi/first/wpilibj/templates/OI.java</file>
+            <file>file:/C:/Users/cglan/OneDrive/Documents/GitHub/Commanded_Icarus/src/edu/wpi/first/wpilibj/templates/commands/DriveWithNintendoFPP.java</file>
+            <file>file:/C:/Users/cglan/OneDrive/Documents/GitHub/Commanded_Icarus/src/Util/Joystick_configurations.java</file>
         </group>
     </open-files>
 </project-private>

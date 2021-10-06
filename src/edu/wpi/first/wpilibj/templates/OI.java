@@ -60,7 +60,7 @@ public class OI{//operator interface class
     public void OIinit() {//initialize OI 
         
         
-        Joystick_configurations.selectJoystickType("LogitechWingman");
+        Joystick_configurations.selectJoystickType("NintendoSwitchFPP");
         
      JoystickType = Joystick_configurations.finalJoystickType;//the selected joystick for driving the bot
      

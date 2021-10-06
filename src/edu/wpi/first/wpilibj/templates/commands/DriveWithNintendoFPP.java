@@ -37,10 +37,10 @@ public class DriveWithNintendoFPP extends CommandBase{
         OI.driveMagnitude = -Constants.slowCreepSpeed;
         }//if L is pressed, the bot creeps backward
         else if(OI.driverR.get() == false || OI.driverL.get() == false){
-        OI.driveMagnitude = OI.Driverstick.getRawAxis(OI.driverLeftYAxis);
+        OI.driveMagnitude = -OI.Driverstick.getRawAxis(OI.driverLeftYAxis);
         }//if neither creep buttons pressed, magnitude set by stick
         
-        OI.driveTurn = OI.Driverstick.getRawAxis(OI.driverLeftXAxis);//turn is set by stick
+        OI.driveTurn = -OI.Driverstick.getRawAxis(OI.driverLeftXAxis);//turn is set by stick
         
         CommandBase.m_drivetrainSubsystem.arcadeDrive(OI.driveMagnitude,OI.driveTurn);//Arcade drive the bot
         
